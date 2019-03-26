@@ -3,7 +3,7 @@ import java.io.*;
 
 public class PhoneBook{
     static File phonebook= new File("phonebook.txt");
-    static TreeMap <String,String> maindata = new TreeMap <String,String> ();
+    static TreeMap<String,String> maindata = new TreeMap<String,String>();
     static boolean isitsorted=false;
     
     public static void main(String[] args){
@@ -62,7 +62,7 @@ public class PhoneBook{
             phonedata.close();
         }
         else{
-            for(Map.Entry count:maindata.entrySet()){    
+            for(Map.Entry<String,String> count:maindata.entrySet()){    
                 System.out.println(count.getKey()+" "+count.getValue());
             }
         }

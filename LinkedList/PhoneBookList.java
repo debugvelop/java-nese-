@@ -80,7 +80,7 @@ public class PhoneBookList{
         }
         phoneread.close();
 
-        for(Map.Entry count:maindata.entrySet()){    
+        for(Map.Entry<String,String> count:maindata.entrySet()){    
             phonemain.insert(count.getKey()+" "+count.getValue());
         }
     }
