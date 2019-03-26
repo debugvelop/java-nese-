@@ -105,32 +105,32 @@ public class BinaryTree extends BinTree{
     }
 
     public static void showFruitPre(Node root){
-        System.out.print(root.getFruit()+",");
+        System.out.print(root.getFruit());
         if(root.leftBranch!=null){
-            System.out.print(root.leftBranch.getFruit()+",");
+            System.out.print(","+root.leftBranch.getFruit());
         }
         if(root.rightBranch!=null){
-            System.out.println(root.rightBranch.getFruit());
+            System.out.println(","+root.rightBranch.getFruit());
         }
     }
 
     public static void showFruitIn(Node root){
         if(root.leftBranch!=null){
-            System.out.print(root.leftBranch.getFruit()+",");
+            System.out.print(root.leftBranch.getFruit());
         }
-        System.out.print(root.getFruit()+",");
+        System.out.print(","+root.getFruit());
         if(root.rightBranch!=null){
-            System.out.println(root.rightBranch.getFruit());
+            System.out.println(","+root.rightBranch.getFruit());
         }
     }
 
     public static void showFruitPost(Node root){
         if(root.leftBranch!=null){
-            System.out.print(root.leftBranch.getFruit()+",");
+            System.out.print(root.leftBranch.getFruit());
         }
         if(root.rightBranch!=null){
-            System.out.println(root.rightBranch.getFruit());
+            System.out.println(","+root.rightBranch.getFruit());
         }
-        System.out.print(root.getFruit()+",");
+        System.out.print(","+root.getFruit());
     }
 }
