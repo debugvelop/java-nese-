@@ -1,7 +1,11 @@
 import java.util.*;
 
-public class BinaryTree{
+public class BinaryTree extends BinTree{
     public Node root;
+
+    public BinaryTree(){
+        root=null;
+    }
 
     public void addFruit(Node fruit){
         if(root==null){
@@ -32,9 +36,10 @@ public class BinaryTree{
     }
 
     public static Boolean searchFruit(Node root,int query){
+        boolean found=false;
         if(root!=null){
             if(root.getFruit()==query){
-                return true;
+                found=true;
             }
             else if(root.getFruit()<query){
                 searchFruit(root.rightBranch,query);
@@ -44,11 +49,12 @@ public class BinaryTree{
             }
         }
         else{
-            return false;
+            found=false;
         }
+        return found;
     }
 
-    public static String deleteFruit(int query){
+    public void deleteFruit(int query){
         Node trunk=root,leaf=root;
         int left=0,right=0;
         while(leaf.getFruit()!=query){
@@ -100,19 +106,31 @@ public class BinaryTree{
 
     public static void showFruitPre(Node root){
         System.out.print(root.getFruit()+",");
-        System.out.print(root.leftBranch.getFruit()+",");
-        System.out.println(root.rightBranch.getFruit());
+        if(root.leftBranch!=null){
+            System.out.print(root.leftBranch.getFruit()+",");
+        }
+        if(root.rightBranch!=null){
+            System.out.println(root.rightBranch.getFruit());
+        }
     }
 
     public static void showFruitIn(Node root){
-        System.out.print(root.leftBranch.getFruit()+",");
+        if(root.leftBranch!=null){
+            System.out.print(root.leftBranch.getFruit()+",");
+        }
         System.out.print(root.getFruit()+",");
-        System.out.println(root.rightBranch.getFruit());
+        if(root.rightBranch!=null){
+            System.out.println(root.rightBranch.getFruit());
+        }
     }
 
     public static void showFruitPost(Node root){
-        System.out.print(root.leftBranch.getFruit()+",");
-        System.out.println(root.rightBranch.getFruit());
+        if(root.leftBranch!=null){
+            System.out.print(root.leftBranch.getFruit()+",");
+        }
+        if(root.rightBranch!=null){
+            System.out.println(root.rightBranch.getFruit());
+        }
         System.out.print(root.getFruit()+",");
     }
 }

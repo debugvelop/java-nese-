@@ -1,4 +1,4 @@
-public class Node{
+public class Node extends BinaryTree{
     private int fruit;
     public Node leftBranch,rightBranch;
 
