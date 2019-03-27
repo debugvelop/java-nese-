@@ -1,6 +1,5 @@
 import java.io.*;
 import java.util.*;
-import java.security.SecureRandom;
 
 public class BucketSort{
     private static TreeMap<Character,ArrayList<String>> mainbucket=new TreeMap<Character,ArrayList<String>>();
@@ -12,32 +11,21 @@ public class BucketSort{
         try {
             readStrings();
         } catch (FileNotFoundException e) {}
-        while(option!=4){
+        while(option!=3){
             System.out.println("This is a demo of Bucket Sort");
-            System.out.println("1. Generate Strings");
-            System.out.println("2. View Strings");
-            System.out.println("3. Sort Strings");
-            System.out.println("4. Exit");
+            System.out.println("1. View Strings");
+            System.out.println("2. Sort Strings");
+            System.out.println("3. Exit");
             System.out.print("Mode : ");
             Scanner modeInput= new Scanner(System.in);
             option=modeInput.nextInt();
             switch(option){
                 case 1:
-                    System.out.println("How many words you want? ");
-                    Scanner lenInput= new Scanner(System.in);
-                    System.out.println("How many strings you want? ");
-                    Scanner countInput= new Scanner(System.in);
-                    count=countInput.nextInt();
-                    length=lenInput.nextInt();
-                    generateStrings(count,length);
-                    System.out.println();
-                    break;
-                case 2:
                     System.out.println();
                     showStrings();
                     System.out.println();
                     break;
-                case 3:
+                case 2:
                     sortStrings();
                     System.out.println();
                     break;
@@ -61,16 +49,6 @@ public class BucketSort{
             mainbucket.get(key).add(value);
         }
         sourceRead.close();
-    }
-
-    private static String generateStrings(int count,int length){
-        String listRand="aAbBcCdDeEfFgGhHiIjJkKlLmMnNoOpPqQrRsStTuUvVwWxXyYzZ";
-        StringBuffer RandStr=new StringBuffer(length);
-        SecureRandom secRand=new SecureRandom();
-        for(int x=0;x<length;x++){
-            RandStr.append(listRand.charAt(secRand.nextInt(listRand.length())));
-        }
-        return RandStr.toString();
     }
 
     private static void showStrings(){

@@ -4,7 +4,7 @@ import java.security.SecureRandom;
 
 public class BucketSort_Ind{
     private static TreeMap<Character,ArrayList<String>> mainbucket=new TreeMap<Character,ArrayList<String>>();
-    private static String[] result;
+    private static String[] stored;
 
     public static void main(String[] args){
         int option=0,count=0,length=0;
@@ -25,18 +25,19 @@ public class BucketSort_Ind{
                     System.out.print("How many strings you want? ");
                     Scanner countInput= new Scanner(System.in);
                     count=countInput.nextInt();
-                    try{
-                        readStrings(count,length);
-                    } catch(FileNotFoundException e){}
+                    stored=new String[count];
+                    inputArray(count, length);
                     System.out.println();
                     break;
                 case 2:
                     System.out.println();
-                    showStrings(count);
+                    showStrings();
                     System.out.println();
                     break;
                 case 3:
+                    readArray(count);
                     sortStrings();
+                    moveToArray();
                     System.out.println();
                     break;
                 case 4:
@@ -49,20 +50,17 @@ public class BucketSort_Ind{
         }
     }
 
-    private static void readStrings(int count,int length) throws FileNotFoundException{
-        String value;
-        Character key;
-        int x=count;
-        while(x>=1){
-            value=generateStrings(length);
-            key=Character.toLowerCase(value.charAt(0));
-            if(mainbucket.get(key)==null){
-                mainbucket.put(key,new ArrayList<String>());
-            }
-            mainbucket.get(key).add(value);
-            --x;
+    private static void inputArray(int count,int length){
+        for(int x=0;x<count;x++){
+            stored[x]=generateStrings(length);
         }
         System.out.println("Strings has been generated");
+    }
+
+    private static void showStrings(){
+        for(String res:stored){
+            System.out.print(res+" ");
+        }
     }
 
     private static String generateStrings(int length){
@@ -75,20 +73,18 @@ public class BucketSort_Ind{
         return RandomStr.toString();
     }
 
-    private static void showStrings(int count){
-        int x=0,y;
-        result=new String[count];
-        for(Map.Entry<Character,ArrayList<String>> itr:mainbucket.entrySet()){
-            ArrayList<String> temp = itr.getValue();
-            int z=temp.size()-1;
-            y=0;
-            while(z>=0){
-                result[x++]=temp.get(y++);
-                z--;
+    private static void readArray(int count){
+        String value;
+        Character key;
+        int x=0;
+        while(x<count){
+            value=stored[x];
+            key=Character.toLowerCase(value.charAt(0));
+            if(mainbucket.get(key)==null){
+                mainbucket.put(key,new ArrayList<String>());
             }
-        }
-        for(String res:result){
-            System.out.println(res);
+            mainbucket.get(key).add(value);
+            x++;
         }
     }
 
@@ -97,5 +93,18 @@ public class BucketSort_Ind{
             Collections.sort(itr.getValue());
         }
         System.out.println("Strings has been sorted");
+    }
+
+    private static void moveToArray(){
+        int x=0,y;
+        for(Map.Entry<Character,ArrayList<String>> itr:mainbucket.entrySet()){
+            ArrayList<String> temp = itr.getValue();
+            int z=temp.size()-1;
+            y=0;
+            while(z>=0){
+                stored[x++]=temp.get(y++);
+                z--;
+            }
+        }
     }
 }
