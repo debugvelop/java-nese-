@@ -16,6 +16,4 @@ public class QueueInit extends Kuewe{
     public int dequeue(){
         return queue[y++];
     }
-
-    public 
 }
