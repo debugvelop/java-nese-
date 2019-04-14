@@ -46,7 +46,7 @@ public class EqualStack{
                 gam=gamma.dec();
             }
         }while(alp!=bet||bet!=gam);
-        System.out.print(alp+" "+bet+" "+gam);
+        System.out.println(alp+" "+bet+" "+gam);
     }
 }
 
