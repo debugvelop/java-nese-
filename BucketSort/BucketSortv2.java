@@ -2,7 +2,7 @@ import java.io.*;
 import java.util.*;
 import java.security.SecureRandom;
 
-public class BucketSort_Ind{
+public class BucketSortv2{
     private static TreeMap<Character,ArrayList<String>> mainbucket=new TreeMap<Character,ArrayList<String>>();
     private static String[] stored;
 

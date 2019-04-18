@@ -1,10 +1,11 @@
 import java.util.*;
+import java.io.*;
 
 public class BinaryTree extends BinTree{
     public Node root;
 
     public BinaryTree(){
-        root=null;
+        this.root=null;
     }
 
     public void addFruit(Node fruit){
@@ -109,28 +110,28 @@ public class BinaryTree extends BinTree{
         if(root.leftBranch!=null){
             System.out.print(","+root.leftBranch.getFruit());
         }
-        if(root.rightBranch!=null){
+        else if(root.rightBranch!=null){
             System.out.println(","+root.rightBranch.getFruit());
         }
     }
 
     public static void showFruitIn(Node root){
         if(root.leftBranch!=null){
-            System.out.print(root.leftBranch.getFruit());
+            System.out.print(root.leftBranch.getFruit()+",");
         }
-        System.out.print(","+root.getFruit());
+        System.out.print(root.getFruit());
         if(root.rightBranch!=null){
-            System.out.println(","+root.rightBranch.getFruit());
+            System.out.println(root.rightBranch.getFruit());
         }
     }
 
     public static void showFruitPost(Node root){
         if(root.leftBranch!=null){
-            System.out.print(root.leftBranch.getFruit());
+            System.out.print(root.leftBranch.getFruit()+",");
         }
-        if(root.rightBranch!=null){
-            System.out.println(","+root.rightBranch.getFruit());
+        else if(root.rightBranch!=null){
+            System.out.print(root.rightBranch.getFruit()+",");
         }
-        System.out.print(","+root.getFruit());
+        System.out.println(root.getFruit());
     }
 }

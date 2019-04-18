@@ -1,7 +1,7 @@
 import java.io.*;
 import java.util.*;
 
-public class BucketSort{
+public class BucketSortv1{
     private static TreeMap<Character,ArrayList<String>> mainbucket=new TreeMap<Character,ArrayList<String>>();
     private static File source=new File("stringsupdown.txt");
     private static String[] result;

@@ -1,3 +1,6 @@
+import java.util.*;
+import java.io.*;
+
 public class Node extends BinaryTree{
     private int fruit;
     public Node leftBranch,rightBranch;

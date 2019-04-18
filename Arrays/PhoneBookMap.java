@@ -1,7 +1,7 @@
 import java.util.*;
 import java.io.*;
 
-public class PhoneBook{
+public class PhoneBookMap{
     static File phonebook= new File("phonebook.txt");
     static TreeMap<String,String> maindata = new TreeMap<String,String>();
     static boolean isitsorted=false;

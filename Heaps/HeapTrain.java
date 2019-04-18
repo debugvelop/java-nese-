@@ -35,7 +35,7 @@ class Heaps extends HeapTrain{
         dataHeap[x++]=value;
     }
 
-    public void printHeap(int[] heaps){
+    private void printHeap(int[] heaps){
         for(int e:heaps){
             System.out.print(e+" ");
         }
@@ -50,7 +50,7 @@ class Heaps extends HeapTrain{
         printHeap(resultHeap);
     }
 
-    public int maxValue(int[] heaps){
+    private int maxValue(int[] heaps){
         int top=heaps[0],count=0;
         while(count<length){
             if(top<heaps[count]){
@@ -61,7 +61,7 @@ class Heaps extends HeapTrain{
         return top;
     }
 
-    public int minValue(int[] heaps){
+    private int minValue(int[] heaps){
         int down=heaps[0],count=0;
         while(count<length){
             if(down>heaps[count]){
@@ -72,7 +72,7 @@ class Heaps extends HeapTrain{
         return down;
     }
 
-    public int getIndex(int value,int[] heaps){
+    private int getIndex(int value,int[] heaps){
         int count=0;
         while(count<length){
             if(heaps[count]==value){
@@ -83,22 +83,22 @@ class Heaps extends HeapTrain{
         return count;
     }
 
-    public void swapValue(int index1,int index2,int[] heaps){
+    private void swapValue(int index1,int index2,int[] heaps){
         int temp=heaps[index1];
         heaps[index1]=heaps[index2];
         heaps[index2]=temp;
     }
 
-    public void buildMaxLog(int root,int node,int[] heaps){
+    private void buildMaxHeapLog(int root,int node,int[] heaps){
         if(heaps[root]<heaps[node]){
             swapValue(root,node,heaps);
         }
         if(root!=0){
-            buildMaxLog((root-1)/2,root,heaps);
+            buildMaxHeapLog((root-1)/2,root,heaps);
         }
     }
 
-    public int buildMaxN(int root,int[] heaps){
+    private int buildMaxHeapN(int root,int[] heaps){
         int left=(root*2)+1;
         int right=(root*2)+2;
         int stop=0;
@@ -115,21 +115,21 @@ class Heaps extends HeapTrain{
             }
         }
         if(root!=0){
-            buildMaxN((root-1),heaps);
+            buildMaxHeapN((root-1),heaps);
         }
         return stop;
     }
 
-    public void buildMinLog(int root,int node,int[] heaps){
+    private void buildMinHeapLog(int root,int node,int[] heaps){
         if(heaps[root]>heaps[node]){
             swapValue(root,node,heaps);
         }
         if(root!=0){
-            buildMinLog((root-1)/2,root,heaps);
+            buildMinHeapLog((root-1)/2,root,heaps);
         }
     }
 
-    public int buildMinN(int root,int[] heaps){
+    private int buildMinHeapN(int root,int[] heaps){
         int left=(root*2)+1;
         int right=(root*2)+2;
         int stop=0;
@@ -146,7 +146,7 @@ class Heaps extends HeapTrain{
             }
         }
         if(root!=0){
-            buildMinN((root-1),heaps);
+            buildMinHeapN((root-1),heaps);
         }
         return stop;
     }
@@ -155,8 +155,8 @@ class Heaps extends HeapTrain{
         resultHeap=dataHeap.clone();
         int limit=(length-1)/2;
         for(int count=0;count<limit;count++){
-            buildMaxLog(count,(count*2)+1,resultHeap);
-            buildMaxLog(count,(count*2)+2,resultHeap);
+            buildMaxHeapLog(count,(count*2)+1,resultHeap);
+            buildMaxHeapLog(count,(count*2)+2,resultHeap);
         }
     }
 
@@ -165,7 +165,7 @@ class Heaps extends HeapTrain{
         int start=(length-2)/2;
         int status;
         do{
-            status=buildMaxN(start,resultHeap);
+            status=buildMaxHeapN(start,resultHeap);
         }while(status!=0);
     }
 
@@ -173,8 +173,8 @@ class Heaps extends HeapTrain{
         resultHeap=dataHeap;
         int limit=(length-1)/2;
         for(int count=0;count<limit;count++){
-            buildMinLog(count,(count*2)+1,resultHeap);
-            buildMinLog(count,(count*2)+2,resultHeap);
+            buildMinHeapLog(count,(count*2)+1,resultHeap);
+            buildMinHeapLog(count,(count*2)+2,resultHeap);
         }
     }
 
@@ -183,7 +183,13 @@ class Heaps extends HeapTrain{
         int start=(length-2)/2;
         int status;
         do{
-            status=buildMinN(start,resultHeap);
+            status=buildMinHeapN(start,resultHeap);
         }while(status!=0);
+    }
+
+    public void sortHeapAsc(){
+    }
+
+    public void sortHeapDes(){
     }
 }
