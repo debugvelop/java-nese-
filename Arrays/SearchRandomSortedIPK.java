@@ -1,6 +1,6 @@
 import java.util.*;
 
-class SearchRandomSortedIPK{
+public class SearchRandomSortedIPK{
     public static void main(String[] args){
         System.out.print("Hasilkan IPK sebanyak: ");
         Scanner Input1= new Scanner(System.in);
