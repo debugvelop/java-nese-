@@ -2,17 +2,29 @@ import java.util.*;
 import java.io.*;
 import java.security.SecureRandom;
 
-public class Arrays2Combine{
+public class Arrays2Combine_v2{
     private static String[] Array1;
     private static String[] Array2;
     private static String[] Array3;
     private static ArrayList<String> Array4=new ArrayList<String>();
     public static void main(String[] args){
-        Array1=new String[8];//{"a","b","c","d","e","f","g","h"};
-        Array2=new String[14];//{"a","c","e","g","i","j","k","l","m","n","o","p","q","r"};
+        System.out.print("Jumlah elemen Array pertama: ");
+        Scanner LengthArray1=new Scanner(System.in);
+        int length1=LengthArray1.nextInt();
+        System.out.print("Jumlah elemen Array kedua  : ");
+        Scanner LengthArray2=new Scanner(System.in);
+        int length2=LengthArray2.nextInt();
+        System.out.print("Elemen Array pertama (Gunakan spasi): ");
+        Scanner InArray1=new Scanner(System.in);
+        String input1=InArray1.nextLine();
+        System.out.print("Elemen Array kedua (Gunakan spasi)  : ");
+        Scanner InArray2=new Scanner(System.in);
+        String input2=InArray2.nextLine();
+        Array1=new String[length1];
+        Array2=new String[length2];
         Array3=new String[Array1.length+Array2.length];
-        inputStrings(1,Array1);
-        inputStrings(1,Array2);
+        inputStrings(input1,Array1);
+        inputStrings(input2,Array2);
         showStrings(Array1);
         showStrings(Array2);
         sortStrings(Array1);
@@ -22,36 +34,11 @@ public class Arrays2Combine{
         showStrings(Array3);
     }
 
-    private static String generateStrings(int length){
-        String listRandom="abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
-        StringBuffer RandomStr=new StringBuffer(length);
-        SecureRandom randomer=new SecureRandom();
-        for(int x=0;x<length;x++){
-            RandomStr.append(listRandom.charAt(randomer.nextInt(listRandom.length())));
-        }
-        return RandomStr.toString();
-    }
-
-    private static boolean checkDuplicate(String[] array,int index,String str){
-        boolean duplicate=false;
-        while(index>0){
-            if(array[index-1]==str){
-                duplicate=true;
-            }
-            index--;
-        }
-        return duplicate;
-    }
-
-    private static void inputStrings(int length,String[] array){
-        for(int x=0;x<array.length;x++){
-            String freshStr=generateStrings(length);
-            if(!checkDuplicate(array,x,freshStr)){
-                array[x]=freshStr;
-            }
-            else{
-                array[x]=generateStrings(length);
-            }
+    private static void inputStrings(String input,String[] array){
+        String[] temp=input.split(" ");
+        int counter=0;
+        for(String str: temp){
+            array[counter++]=str;
         }
     }
 
