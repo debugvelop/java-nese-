@@ -25,12 +25,15 @@ public class Arrays2Combine_v2{
         Array3=new String[Array1.length+Array2.length];
         inputStrings(input1,Array1);
         inputStrings(input2,Array2);
-        showStrings(Array1);
-        showStrings(Array2);
         sortStrings(Array1);
         sortStrings(Array2);
+        System.out.print("Array pertama: ");
+        showStrings(Array1);
+        System.out.print("Array kedua  : ");
+        showStrings(Array2);
         combineArrays(Array1,Array2,Array3);
         sortStrings(Array3);
+        System.out.print("Gabungan Array pertama dan Array kedua: ");
         showStrings(Array3);
     }
 
