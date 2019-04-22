@@ -1,5 +1,4 @@
 import java.util.*;
-import java.io.*;
 
 public class Arrays2Combine_v2{
     private static String[] Array1;
@@ -35,6 +34,10 @@ public class Arrays2Combine_v2{
         sortStrings(Array3);
         System.out.print("Gabungan Array: ");
         showStrings(Array3);
+        LengthArray1.close();
+        LengthArray2.close();
+        InArray1.close();
+        InArray2.close();
     }
 
     private static void inputStrings(String input,String[] array){

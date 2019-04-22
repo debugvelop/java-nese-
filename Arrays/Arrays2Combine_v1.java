@@ -1,5 +1,4 @@
 import java.util.*;
-import java.io.*;
 import java.security.*;
 
 public class Arrays2Combine_v1{
@@ -20,6 +19,8 @@ public class Arrays2Combine_v1{
                 Array1=new String[length];
                 inputStrings(strlength,Array1);
                 sortStrings(Array1);
+                input1.close();
+                input2.close();
                 done=true;
             }
             else{
@@ -39,6 +40,8 @@ public class Arrays2Combine_v1{
                 Array2=new String[length];
                 inputStrings(strlength,Array2);
                 sortStrings(Array2);
+                input1.close();
+                input2.close();
                 done=true;
             }
             else{
