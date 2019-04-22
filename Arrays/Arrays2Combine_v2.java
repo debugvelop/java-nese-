@@ -1,6 +1,5 @@
 import java.util.*;
 import java.io.*;
-import java.security.SecureRandom;
 
 public class Arrays2Combine_v2{
     private static String[] Array1;
@@ -11,15 +10,16 @@ public class Arrays2Combine_v2{
         System.out.print("Jumlah elemen Array pertama: ");
         Scanner LengthArray1=new Scanner(System.in);
         int length1=LengthArray1.nextInt();
-        System.out.print("Jumlah elemen Array kedua  : ");
-        Scanner LengthArray2=new Scanner(System.in);
-        int length2=LengthArray2.nextInt();
         System.out.print("Elemen Array pertama (Gunakan spasi): ");
         Scanner InArray1=new Scanner(System.in);
         String input1=InArray1.nextLine();
+        System.out.print("Jumlah elemen Array kedua  : ");
+        Scanner LengthArray2=new Scanner(System.in);
+        int length2=LengthArray2.nextInt();
         System.out.print("Elemen Array kedua (Gunakan spasi)  : ");
         Scanner InArray2=new Scanner(System.in);
         String input2=InArray2.nextLine();
+        System.out.println();
         Array1=new String[length1];
         Array2=new String[length2];
         Array3=new String[Array1.length+Array2.length];
@@ -33,7 +33,7 @@ public class Arrays2Combine_v2{
         showStrings(Array2);
         combineArrays(Array1,Array2,Array3);
         sortStrings(Array3);
-        System.out.print("Gabungan Array pertama dan Array kedua: ");
+        System.out.print("Gabungan Array: ");
         showStrings(Array3);
     }
 

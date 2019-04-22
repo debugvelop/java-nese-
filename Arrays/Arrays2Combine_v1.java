@@ -1,6 +1,5 @@
 import java.util.*;
 import java.io.*;
-import java.security.SecureRandom;
 
 public class Arrays2Combine_v1{
     private static String[] Array1;
@@ -8,25 +7,57 @@ public class Arrays2Combine_v1{
     private static String[] Array3;
     private static ArrayList<String> Array4=new ArrayList<String>();
     public static void main(String[] args){
-        Array1=new String[8];//{"a","b","c","d","e","f","g","h"};
-        Array2=new String[14];//{"a","c","e","g","i","j","k","l","m","n","o","p","q","r"};
+        boolean done=false;
+        while(!done){
+            System.out.print("Jumlah elemen Array pertama: ");
+            Scanner input1= new Scanner(System.in);
+            int length=input1.nextInt();
+            System.out.print("Jumlah karakter String     : ");
+            Scanner input2= new Scanner(System.in);
+            int strlength=input2.nextInt();
+            if(Math.pow(26,strlength)>=length){
+                Array1=new String[length];
+                inputStrings(strlength,Array1);
+                sortStrings(Array1);
+                done=true;
+            }
+            else{
+                System.out.println("Jumlah karakter String kurang!");
+                System.out.println();
+            }
+        }
+        done=false;
+        while(!done){
+            System.out.print("Jumlah elemen Array kedua  : ");
+            Scanner input1= new Scanner(System.in);
+            int length=input1.nextInt();
+            System.out.print("Jumlah karakter String     : ");
+            Scanner input2= new Scanner(System.in);
+            int strlength=input2.nextInt();
+            if(Math.pow(26,strlength)>=length){
+                Array2=new String[length];
+                inputStrings(strlength,Array2);
+                sortStrings(Array2);
+                done=true;
+            }
+            else{
+                System.out.println("Jumlah karakter String kurang!");
+                System.out.println();
+            }
+        }
         Array3=new String[Array1.length+Array2.length];
-        inputStrings(1,Array1);
-        inputStrings(1,Array2);
         showStrings(Array1);
         showStrings(Array2);
-        sortStrings(Array1);
-        sortStrings(Array2);
         combineArrays(Array1,Array2,Array3);
         sortStrings(Array3);
         showStrings(Array3);
     }
 
     private static String generateStrings(int length){
-        String listRandom="abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
+        String listRandom="abcdefghijklmnopqrstuvwxyz";
         StringBuffer RandomStr=new StringBuffer(length);
-        SecureRandom randomer=new SecureRandom();
-        for(int x=0;x<length;x++){
+        Random randomer=new Random();
+        for(int counter=0;counter<length;counter++){
             RandomStr.append(listRandom.charAt(randomer.nextInt(listRandom.length())));
         }
         return RandomStr.toString();
@@ -35,23 +66,23 @@ public class Arrays2Combine_v1{
     private static boolean checkDuplicate(String[] array,int index,String str){
         boolean duplicate=false;
         while(index>0){
-            if(array[index-1]==str){
+            if(str.equals(array[index])){
                 duplicate=true;
             }
-            index--;
+            else{
+                --index;
+            }
         }
         return duplicate;
     }
 
     private static void inputStrings(int length,String[] array){
-        for(int x=0;x<array.length;x++){
-            String freshStr=generateStrings(length);
-            if(!checkDuplicate(array,x,freshStr)){
-                array[x]=freshStr;
-            }
-            else{
-                array[x]=generateStrings(length);
-            }
+        for(int counter=0;counter<array.length;counter++){
+            String freshStr;
+            do{
+                freshStr=generateStrings(length);
+            }while(checkDuplicate(array,counter-1,freshStr));
+            array[counter]=freshStr;
         }
     }
 
