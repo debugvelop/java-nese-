@@ -4,18 +4,55 @@ import java.io.*;
 public class HeapTrain{
     public static void main(String[] args){
         int[] input={1,3,5,4,6,13,10,9,8,15,17};
+        boolean stop=false;
         Heaps fooHeap=new Heaps(input.length);
         for(int e:input){
             fooHeap.inHeap(e);
         }
-        fooHeap.maxHeapLog();
-        fooHeap.showHeap();
-        fooHeap.minHeapLog();
-        fooHeap.showHeap();
-        fooHeap.maxHeapN();
-        fooHeap.showHeap();
-        fooHeap.minHeapN();
-        fooHeap.showHeap();
+        while(!stop){
+            System.out.println("Heap Operation Menu");
+            System.out.println("1. Max Heap O(nlogn)");
+            System.out.println("2. Min Heap O(nlogn)");
+            System.out.println("3. Max Heap O(n)");
+            System.out.println("4. Min Heap O(n)");
+            System.out.println("5. Sort Max Heap");
+            System.out.println("6. Sort Min Heap");
+            System.out.println("7. Exit");
+            System.out.print("Menu ");
+            Scanner option=new Scanner(System.in);
+            int choose=option.nextInt();
+            switch(choose){
+                case 1:
+                    fooHeap.maxHeapLog();
+                    fooHeap.showHeap();
+                    break;
+                case 2:
+                    fooHeap.minHeapLog();
+                    fooHeap.showHeap();
+                    break;
+                case 3:
+                    fooHeap.maxHeapN();
+                    fooHeap.showHeap();
+                    break;
+                case 4:
+                    fooHeap.minHeapN();
+                    fooHeap.showHeap();
+                    break;
+                case 5:
+                    fooHeap.sortHeapAsc();
+                    fooHeap.showHeap();
+                    break;
+                case 6:
+                    fooHeap.sortHeapDes();
+                    fooHeap.showHeap();
+                    break;
+                default:
+                    stop=true;
+                    option.close();
+                    break;
+            }
+            System.out.println();
+        }
     }
 }
 
@@ -170,7 +207,7 @@ class Heaps extends HeapTrain{
     }
 
     public void minHeapLog(){
-        resultHeap=dataHeap;
+        resultHeap=dataHeap.clone();
         int limit=(length-1)/2;
         for(int count=0;count<limit;count++){
             buildMinHeapLog(count,(count*2)+1,resultHeap);
@@ -179,7 +216,7 @@ class Heaps extends HeapTrain{
     }
 
     public void minHeapN(){
-        resultHeap=dataHeap;
+        resultHeap=dataHeap.clone();
         int start=(length-2)/2;
         int status;
         do{
@@ -187,9 +224,83 @@ class Heaps extends HeapTrain{
         }while(status!=0);
     }
 
+    public void rebuildMax(int root,int[] heaps){
+        int left=(root*2)+1;
+        int right=(root*2)+2;
+        if(left<=heaps.length-1){
+            if(heaps[left]>heaps[right] && heaps[left]!=0){
+                swapValue(root,left,heaps);
+                rebuildMax(left,heaps);
+            }
+            else if(heaps[left]<heaps[right] && heaps[right]!=0){
+                swapValue(root,right,heaps);
+                rebuildMax(right,heaps);
+            }
+        }
+    }
+
+    public void rebuildMin(int root,int[] heaps){
+        int left=(root*2)+1;
+        int right=(root*2)+2;
+        if(left<=heaps.length-1){
+            if(heaps[left]<heaps[right] && heaps[left]!=0){
+                swapValue(root,left,heaps);
+                rebuildMin(left,heaps);
+            }
+            else if(heaps[left]>heaps[right] && heaps[right]!=0){
+                swapValue(root,right,heaps);
+                rebuildMin(right,heaps);
+            }
+        }
+    }
+
+    public int removeMax(){
+        int pop;
+        int index=0;
+        pop=resultHeap[0];
+        resultHeap[0]=0;
+        for(int count=resultHeap.length-1;count>=0;count--){
+            if(resultHeap[count]!=0){
+                index=count;
+                break;
+            }
+        }
+        swapValue(0,index,resultHeap);
+        rebuildMax(0,resultHeap);
+        return pop;
+    }
+
+    public int removeMin(){
+        int pop;
+        int index=0;
+        pop=resultHeap[0];
+        resultHeap[0]=0;
+        for(int count=resultHeap.length-1;count>=0;count--){
+            if(resultHeap[count]!=0){
+                index=count;
+                break;
+            }
+        }
+        swapValue(0,index,resultHeap);
+        rebuildMin(0,resultHeap);
+        return pop;
+    }
+
     public void sortHeapAsc(){
+        maxHeapN();
+        int[] store=new int[resultHeap.length];
+        for(int count=0;count<store.length;count++){
+            store[count]=removeMax();
+        }
+        resultHeap=store.clone();
     }
 
     public void sortHeapDes(){
+        minHeapN();
+        int[] store=new int[resultHeap.length];
+        for(int count=0;count<store.length;count++){
+            store[count]=removeMin();
+        }
+        resultHeap=store.clone();
     }
 }
