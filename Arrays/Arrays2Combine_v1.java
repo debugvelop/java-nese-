@@ -1,5 +1,6 @@
 import java.util.*;
 import java.io.*;
+import java.security.*;
 
 public class Arrays2Combine_v1{
     private static String[] Array1;
@@ -56,7 +57,7 @@ public class Arrays2Combine_v1{
     private static String generateStrings(int length){
         String listRandom="abcdefghijklmnopqrstuvwxyz";
         StringBuffer RandomStr=new StringBuffer(length);
-        Random randomer=new Random();
+        SecureRandom randomer=new SecureRandom();
         for(int counter=0;counter<length;counter++){
             RandomStr.append(listRandom.charAt(randomer.nextInt(listRandom.length())));
         }
@@ -66,11 +67,8 @@ public class Arrays2Combine_v1{
     private static boolean checkDuplicate(String[] array,int index,String str){
         boolean duplicate=false;
         while(index>0){
-            if(str.equals(array[index])){
+            if(str.equals(array[--index])){
                 duplicate=true;
-            }
-            else{
-                --index;
             }
         }
         return duplicate;
@@ -81,7 +79,7 @@ public class Arrays2Combine_v1{
             String freshStr;
             do{
                 freshStr=generateStrings(length);
-            }while(checkDuplicate(array,counter-1,freshStr));
+            }while(checkDuplicate(array,counter,freshStr));
             array[counter]=freshStr;
         }
     }
