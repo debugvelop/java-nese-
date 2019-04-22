@@ -11,10 +11,10 @@ public class HeapTrain{
         }
         while(!stop){
             System.out.println("Heap Operation Menu");
-            System.out.println("1. Max Heap O(nlogn)");
-            System.out.println("2. Min Heap O(nlogn)");
-            System.out.println("3. Max Heap O(n)");
-            System.out.println("4. Min Heap O(n)");
+            System.out.println("1. Max Heap O(NlogN)");
+            System.out.println("2. Min Heap O(NlogN)");
+            System.out.println("3. Max Heap O(N)");
+            System.out.println("4. Min Heap O(N)");
             System.out.println("5. Sort Max Heap");
             System.out.println("6. Sort Min Heap");
             System.out.println("7. Exit");
