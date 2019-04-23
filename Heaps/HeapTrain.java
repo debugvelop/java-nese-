@@ -224,7 +224,7 @@ class Heaps extends HeapTrain{
         }while(status!=0);
     }
 
-    public void rebuildMax(int root,int[] heaps){
+    private void rebuildMax(int root,int[] heaps){
         int left=(root*2)+1;
         int right=(root*2)+2;
         if(left<=heaps.length-1){
@@ -239,7 +239,7 @@ class Heaps extends HeapTrain{
         }
     }
 
-    public void rebuildMin(int root,int[] heaps){
+    private void rebuildMin(int root,int[] heaps){
         int left=(root*2)+1;
         int right=(root*2)+2;
         if(left<=heaps.length-1){
