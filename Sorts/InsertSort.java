@@ -1,4 +1,5 @@
 import java.util.*;
+import java.util.concurrent.TimeUnit;
 import java.io.*;
 
 public class InsertSort{
@@ -12,19 +13,17 @@ public class InsertSort{
         mainArray=new long[length];
         try {
             Scanner inputNum=new Scanner(randomNum);
-            while(inputNum.hasNextByte()){
-                mainArray[count++]=inputNum.nextLong();
+            for(int counter=1;counter<=length;counter++){
+                mainArray[count++]=inputNum.nextInt();
             }
             inputNum.close();
             long start=System.nanoTime();
             insertSort(mainArray);
             long end=System.nanoTime();
-            for(long e:mainArray){
+            /*for(long e:mainArray){
                 System.out.print(e+" ");
-            }
-            System.out.println();
-            System.out.println(end-start+" ns");
-            System.out.println();
+            }*/
+            System.out.println(TimeUnit.NANOSECONDS.toMillis(end-start)+" ms");
         } catch (FileNotFoundException e) {
             System.out.println("File not found!");
         }

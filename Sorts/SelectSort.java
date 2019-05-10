@@ -1,8 +1,9 @@
 import java.util.*;
+import java.util.concurrent.TimeUnit;
 import java.io.*;
 
 public class SelectSort{
-    private static File randomNum=new File("randomNumber.txt");
+    private static File randomNum=new File("randomNumber500k.txt");
     private static int[] mainArray;
     public static void main(String[] args){
         System.gc();
@@ -12,19 +13,17 @@ public class SelectSort{
         mainArray=new int[length];
         try {
             Scanner inputNum=new Scanner(randomNum);
-            while(inputNum.hasNextLine()){
+            for(int counter=1;counter<=length;counter++){
                 mainArray[count++]=inputNum.nextInt();
             }
             inputNum.close();
             long start=System.nanoTime();
             selectSort(mainArray);
             long end=System.nanoTime();
-            for(int e:mainArray){
+            /*for(int e:mainArray){
                 System.out.print(e+" ");
-            }
-            System.out.println();
-            System.out.println(end-start+" ns");
-            System.out.println();
+            }*/
+            System.out.println(TimeUnit.NANOSECONDS.toMillis(end-start)+" ms");
         } catch (FileNotFoundException e) {
             System.out.println("File not found!");
         }
