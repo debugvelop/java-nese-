@@ -1,5 +1,6 @@
 import java.util.*;
-//This hash algorithm uses modulo hash and open-addressing collision handle (Quadratic and Linear Probing)
+import java.security.*;
+//This hash algorithm uses table-size modulo function and open-addressing collision handler (Quadratic,Linear Probing,Double Hashes)
 
 public class HashTest{
     public static void main(String[] args){
@@ -25,9 +26,9 @@ public class HashTest{
                     Scanner inData=new Scanner(System.in);
                     int data=inData.nextInt();
                     fooHash=new Hashes(size);
-                    fooHash.showHash();
+                    SecureRandom randomer=new SecureRandom();
                     while(counter<=data){
-                        fooHash.hashIn(counter*2);
+                        fooHash.hashIn(randomer.nextInt(999));
                         ++counter;
                     }
                     fooHash.showHash();
@@ -57,7 +58,6 @@ public class HashTest{
                     option.close();
                     break;
             }
-            System.out.println();
         }
     }
 }
@@ -83,48 +83,51 @@ class Hashes extends HashTest{
             hashTable[input%length]=input;
         }
         else{
-            try{
+            //linearHandle(input,input%length);
+            //quadracticHandle(input,input%length);
+            doubleHash(input,input%length);
+            /*try{
                 quadracticHandle(input,input%length);
             }catch(ArrayIndexOutOfBoundsException e){
-                linearprobeHandle(input,input%length);
-            }
+                linearHandle(input,input%length);
+            }*/
         }
     }
 
     private void quadracticHandle(int input,int pos){
-        int index=1;
         boolean stop=false;
+        int counter=1;
         while(!stop){
-            int nextIn=pos+(int)Math.pow(index,2);
-            if(nextIn<length-1){
-                if(hashTable[nextIn]==0){
-                    hashTable[nextIn]=input;
-                    stop=true;
-                }
+            int index=(pos+(int) Math.pow(counter,2))%length;
+            if(hashTable[index]==0){
+                hashTable[index]=input;
+                stop=true;
             }
-            else{
-                while(nextIn>length-1){
-                    nextIn=nextIn%length;
-                }
-                if(hashTable[nextIn]==0){
-                    hashTable[nextIn]=input;
-                    stop=true;
-                }
-            }
-            ++index;
+            counter++;
         }
     }
 
-    private void linearprobeHandle(int input,int pos){
+    private void linearHandle(int input,int pos){
         boolean stop=false;
         while(!stop){
-            if(++pos>length-1){
-                pos=pos%length;
-            }
-            if(hashTable[pos]==0){
-                hashTable[pos]=input;
+            pos++;
+            if(hashTable[pos%length]==0){
+                hashTable[pos%length]=input;
                 stop=true;
             }
+        }
+    }
+
+    private void doubleHash(int input,int pos){
+        boolean stop=false;
+        int counter=1;
+        while(!stop){
+            int index=((input%7)+(counter*(5-(input%5))))%length;
+            if(hashTable[index]==0){
+                hashTable[index]=input;
+                stop=true;
+            }
+            counter=counter+2;
         }
     }
 
