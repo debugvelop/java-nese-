@@ -6,6 +6,8 @@ public class HashTest{
     public static void main(String[] args){
         Hashes fooHash=new Hashes(2);
         boolean stop=false;
+        Scanner inMethod;
+        String method;
         while(!stop){
             System.out.println("Hash Operation Menu");
             System.out.println("1. Demo");
@@ -18,6 +20,7 @@ public class HashTest{
             int choose=option.nextInt();
             switch(choose){
                 case 1:
+                    System.gc();
                     int counter=1;
                     System.out.print("Table size: ");
                     Scanner inSize=new Scanner(System.in);
@@ -25,19 +28,26 @@ public class HashTest{
                     System.out.print("Data count: ");
                     Scanner inData=new Scanner(System.in);
                     int data=inData.nextInt();
+                    System.out.print("Collision Method (L,Q,D): ");
+                    inMethod=new Scanner(System.in);
+                    method=inMethod.next();
                     fooHash=new Hashes(size);
                     SecureRandom randomer=new SecureRandom();
                     while(counter<=data){
-                        fooHash.hashIn(randomer.nextInt(999));
+                        fooHash.hashIn(randomer.nextInt(999),method);
                         ++counter;
                     }
                     fooHash.showHash();
+                    System.out.println(fooHash.clusterCheck());
                     break;
                 case 2:
                     System.out.print("Value: ");
                     Scanner inValue=new Scanner(System.in);
                     int value=inValue.nextInt();
-                    fooHash.hashIn(value);
+                    System.out.print("Collision Method (L,Q,D): ");
+                    inMethod=new Scanner(System.in);
+                    method=inMethod.next();
+                    fooHash.hashIn(value,method);
                     fooHash.showHash();
                     break;
                 case 3:
@@ -78,19 +88,23 @@ class Hashes extends HashTest{
         System.out.println();
     }
 
-    public void hashIn(int input){
+    public void hashIn(int input,String method){
         if(hashTable[input%length]==0){
             hashTable[input%length]=input;
         }
         else{
-            //linearHandle(input,input%length);
-            //quadracticHandle(input,input%length);
-            doubleHash(input,input%length);
-            /*try{
-                quadracticHandle(input,input%length);
-            }catch(ArrayIndexOutOfBoundsException e){
+            if(method=="L"){
                 linearHandle(input,input%length);
-            }*/
+            }
+            else if(method=="Q"){
+                quadracticHandle(input,input%length);
+            }
+            else if(method=="D"){
+                doubleHash(input,input%length);
+            }
+            else{
+                linearHandle(input,input%length);
+            }
         }
     }
 
@@ -121,14 +135,31 @@ class Hashes extends HashTest{
     private void doubleHash(int input,int pos){
         boolean stop=false;
         int counter=1;
+        int key1=input%11;
+        int key2=input%7;
         while(!stop){
-            int index=((input%7)+(counter*(5-(input%5))))%length;
+            int index=(key1+(counter*(7-key2)))%length;
             if(hashTable[index]==0){
                 hashTable[index]=input;
                 stop=true;
             }
             counter=counter+2;
         }
+    }
+
+    public int clusterCheck(){
+        int cluster=0;
+        boolean flip=false;
+        for(int counter=0;counter<hashTable.length;counter++){
+            if(hashTable[counter]!=0 && !flip){
+                ++cluster;
+                flip=true;
+            }
+            else if(hashTable[counter]==0){
+                flip=false;
+            }
+        }
+        return cluster;
     }
 
     public boolean searchHash(int query){
