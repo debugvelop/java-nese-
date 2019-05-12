@@ -7,14 +7,13 @@ public class SelectSort{
     private static int[] mainArray;
     public static void main(String[] args){
         System.gc();
-        int count=0;
         Scanner inputLength=new Scanner(System.in);
         int length=inputLength.nextInt();
         mainArray=new int[length];
         try {
             Scanner inputNum=new Scanner(randomNum);
-            for(int counter=1;counter<=length;counter++){
-                mainArray[count++]=inputNum.nextInt();
+            for(int counter=0;counter<length;counter++){
+                mainArray[counter]=inputNum.nextInt();
             }
             inputNum.close();
             long start=System.nanoTime();
