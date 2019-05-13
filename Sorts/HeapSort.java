@@ -19,9 +19,9 @@ public class HeapSort{
             long start=System.nanoTime();
             heapSort(mainArray);
             long end=System.nanoTime();
-            for(int e:mainArray){
+            /*for(int e:mainArray){
                 System.out.print(e+" ");
-            }
+            }*/
             System.out.println(TimeUnit.NANOSECONDS.toMillis(end-start)+" ms");
         } catch (FileNotFoundException e) {
             System.out.println("File not found!");
