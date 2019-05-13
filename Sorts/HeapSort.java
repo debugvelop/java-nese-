@@ -19,9 +19,9 @@ public class HeapSort{
             long start=System.nanoTime();
             heapSort(mainArray);
             long end=System.nanoTime();
-            /*for(int e:mainArray){
+            for(int e:mainArray){
                 System.out.print(e+" ");
-            }*/
+            }
             System.out.println(TimeUnit.NANOSECONDS.toMillis(end-start)+" ms");
         } catch (FileNotFoundException e) {
             System.out.println("File not found!");
@@ -31,32 +31,32 @@ public class HeapSort{
     }
     
     private static void heapSort(int[] heaps){
-        for(int counter=heaps.length/2-1;counter>=0;counter--){
-            buildMaxHeap(0,heaps);
+        for(int counter=(heaps.length/2)-1;counter>=0;counter--){
+            buildMinHeap(counter,heaps.length,heaps);
         }
         for(int counter=heaps.length-1;counter>=0;counter--){
             int temp=heaps[0];
             heaps[0]=heaps[counter];
             heaps[counter]=temp;
-            buildMaxHeap(0,heaps);
+            buildMinHeap(0,counter,heaps);
         }
     }
 
-    private static void buildMaxHeap(int root,int[] heaps){
-        int parent=root;
+    private static void buildMinHeap(int root,int limit,int[] heaps){
+        int ref=root;
         int left=(2*root)+1;
         int right=(2*root)+2;
-        if(left<heaps.length && heaps[left]>heaps[root]){
+        if(left<limit && heaps[left]>heaps[root]){
             root=left;
         }
-        else if(right<heaps.length && heaps[right]>heaps[root]){
+        if(right<limit && heaps[right]>heaps[root]){
             root=right;
         }
-        if(root!=parent){
-            int temp=heaps[parent];
-            heaps[parent]=heaps[root];
-            heaps[root]=temp;
-            buildMaxHeap(root,heaps);
+        if(root!=ref){
+            int temp=heaps[root];
+            heaps[root]=heaps[ref];
+            heaps[ref]=temp;
+            buildMinHeap(root,limit,heaps);
         }
     }
 }
