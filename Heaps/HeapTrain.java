@@ -11,38 +11,28 @@ public class HeapTrain{
         }
         while(!stop){
             System.out.println("Heap Operation Menu");
-            System.out.println("1. Max Heap O(NlogN)");
-            System.out.println("2. Min Heap O(NlogN)");
-            System.out.println("3. Max Heap O(N)");
-            System.out.println("4. Min Heap O(N)");
-            System.out.println("5. Sort Max Heap");
-            System.out.println("6. Sort Min Heap");
-            System.out.println("7. Exit");
+            System.out.println("1. Max Heap");
+            System.out.println("2. Min Heap");
+            System.out.println("3. Sort Max Heap");
+            System.out.println("4. Sort Min Heap");
+            System.out.println("5. Exit");
             System.out.print("Menu ");
             Scanner option=new Scanner(System.in);
             int choose=option.nextInt();
             switch(choose){
                 case 1:
-                    fooHeap.maxHeapLog();
+                    fooHeap.maxHeap();
                     fooHeap.showHeap();
                     break;
                 case 2:
-                    fooHeap.minHeapLog();
+                    fooHeap.minHeap();
                     fooHeap.showHeap();
                     break;
                 case 3:
-                    fooHeap.maxHeapN();
-                    fooHeap.showHeap();
-                    break;
-                case 4:
-                    fooHeap.minHeapN();
-                    fooHeap.showHeap();
-                    break;
-                case 5:
                     fooHeap.sortHeapAsc();
                     fooHeap.showHeap();
                     break;
-                case 6:
+                case 4:
                     fooHeap.sortHeapDes();
                     fooHeap.showHeap();
                     break;
@@ -126,181 +116,67 @@ class Heaps extends HeapTrain{
         heaps[index2]=temp;
     }
 
-    private void buildMaxHeapLog(int root,int node,int[] heaps){
-        if(heaps[root]<heaps[node]){
-            swapValue(root,node,heaps);
+    private void buildMinHeap(int root,int limit,int[] heaps){
+        int ref=root;
+        int left=(2*root)+1;
+        int right=(2*root)+2;
+        if(left<limit && heaps[left]<heaps[root]){
+            root=left;
         }
-        if(root!=0){
-            buildMaxHeapLog((root-1)/2,root,heaps);
+        if(right<limit && heaps[right]<heaps[root]){
+            root=right;
         }
-    }
-
-    private int buildMaxHeapN(int root,int[] heaps){
-        int left=(root*2)+1;
-        int right=(root*2)+2;
-        int stop=0;
-        if(heaps[left]>heaps[right]){
-            if(heaps[root]<heaps[left]){
-                swapValue(root,left,heaps);
-                stop++;
-            }
-        }
-        else{
-            if(heaps[root]<heaps[right]){
-                swapValue(root,right,heaps);
-                stop++;
-            }
-        }
-        if(root!=0){
-            buildMaxHeapN((root-1),heaps);
-        }
-        return stop;
-    }
-
-    private void buildMinHeapLog(int root,int node,int[] heaps){
-        if(heaps[root]>heaps[node]){
-            swapValue(root,node,heaps);
-        }
-        if(root!=0){
-            buildMinHeapLog((root-1)/2,root,heaps);
+        if(root!=ref){
+            int temp=heaps[root];
+            heaps[root]=heaps[ref];
+            heaps[ref]=temp;
+            buildMinHeap(root,limit,heaps);
         }
     }
 
-    private int buildMinHeapN(int root,int[] heaps){
-        int left=(root*2)+1;
-        int right=(root*2)+2;
-        int stop=0;
-        if(heaps[left]<heaps[right]){
-            if(heaps[root]>heaps[left]){
-                swapValue(root,left,heaps);
-                stop++;
-            }
+    private void buildMaxHeap(int root,int limit,int[] heaps){
+        int ref=root;
+        int left=(2*root)+1;
+        int right=(2*root)+2;
+        if(left<limit && heaps[left]>heaps[root]){
+            root=left;
         }
-        else{
-            if(heaps[root]>heaps[right]){
-                swapValue(root,right,heaps);
-                stop++;
-            }
+        if(right<limit && heaps[right]>heaps[root]){
+            root=right;
         }
-        if(root!=0){
-            buildMinHeapN((root-1),heaps);
+        if(root!=ref){
+            swapValue(root,ref,resultHeap);
+            buildMaxHeap(root,limit,heaps);
         }
-        return stop;
     }
 
-    public void maxHeapLog(){
+    public void minHeap(){
         resultHeap=dataHeap.clone();
-        int limit=(length-1)/2;
-        for(int count=0;count<limit;count++){
-            buildMaxHeapLog(count,(count*2)+1,resultHeap);
-            buildMaxHeapLog(count,(count*2)+2,resultHeap);
+        for(int counter=length/2-1;counter>=0;counter--){
+            buildMinHeap(counter,length,resultHeap);
         }
     }
 
-    public void maxHeapN(){
+    public void maxHeap(){
         resultHeap=dataHeap.clone();
-        int start=(length-2)/2;
-        int status;
-        do{
-            status=buildMaxHeapN(start,resultHeap);
-        }while(status!=0);
-    }
-
-    public void minHeapLog(){
-        resultHeap=dataHeap.clone();
-        int limit=(length-1)/2;
-        for(int count=0;count<limit;count++){
-            buildMinHeapLog(count,(count*2)+1,resultHeap);
-            buildMinHeapLog(count,(count*2)+2,resultHeap);
+        for(int counter=length/2-1;counter>=0;counter--){
+            buildMaxHeap(counter,length,resultHeap);
         }
-    }
-
-    public void minHeapN(){
-        resultHeap=dataHeap.clone();
-        int start=(length-2)/2;
-        int status;
-        do{
-            status=buildMinHeapN(start,resultHeap);
-        }while(status!=0);
-    }
-
-    private void rebuildMax(int root,int[] heaps){
-        int left=(root*2)+1;
-        int right=(root*2)+2;
-        if(left<=heaps.length-1){
-            if(heaps[left]>heaps[right] && heaps[left]!=0){
-                swapValue(root,left,heaps);
-                rebuildMax(left,heaps);
-            }
-            else if(heaps[left]<heaps[right] && heaps[right]!=0){
-                swapValue(root,right,heaps);
-                rebuildMax(right,heaps);
-            }
-        }
-    }
-
-    private void rebuildMin(int root,int[] heaps){
-        int left=(root*2)+1;
-        int right=(root*2)+2;
-        if(left<=heaps.length-1){
-            if(heaps[left]<heaps[right] && heaps[left]!=0){
-                swapValue(root,left,heaps);
-                rebuildMin(left,heaps);
-            }
-            else if(heaps[left]>heaps[right] && heaps[right]!=0){
-                swapValue(root,right,heaps);
-                rebuildMin(right,heaps);
-            }
-        }
-    }
-
-    public int removeMax(){
-        int pop;
-        int index=0;
-        pop=resultHeap[0];
-        resultHeap[0]=0;
-        for(int count=resultHeap.length-1;count>=0;count--){
-            if(resultHeap[count]!=0){
-                index=count;
-                break;
-            }
-        }
-        swapValue(0,index,resultHeap);
-        rebuildMax(0,resultHeap);
-        return pop;
-    }
-
-    public int removeMin(){
-        int pop;
-        int index=0;
-        pop=resultHeap[0];
-        resultHeap[0]=0;
-        for(int count=resultHeap.length-1;count>=0;count--){
-            if(resultHeap[count]!=0){
-                index=count;
-                break;
-            }
-        }
-        swapValue(0,index,resultHeap);
-        rebuildMin(0,resultHeap);
-        return pop;
     }
 
     public void sortHeapAsc(){
-        maxHeapN();
-        int[] store=new int[resultHeap.length];
-        for(int count=0;count<store.length;count++){
-            store[count]=removeMax();
+        maxHeap();
+        for(int counter=length-1;counter>=0;counter--){
+            swapValue(0,counter,resultHeap);
+            buildMaxHeap(0,counter,resultHeap);
         }
-        resultHeap=store.clone();
     }
 
     public void sortHeapDes(){
-        minHeapN();
-        int[] store=new int[resultHeap.length];
-        for(int count=0;count<store.length;count++){
-            store[count]=removeMin();
+        minHeap();
+        for(int counter=length-1;counter>=0;counter--){
+            swapValue(0,counter,resultHeap);
+            buildMinHeap(0,counter,resultHeap);
         }
-        resultHeap=store.clone();
     }
 }
