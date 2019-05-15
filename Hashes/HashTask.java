@@ -4,7 +4,7 @@ import java.security.*;
 
 public class HashTask{
     public static void main(String[] args){
-        Hashes fooHash=new Hashes(2);
+        Hash fooHash=new Hash(2);
         boolean stop=false;
         while(!stop){
             System.out.println("Hash Operation Menu");
@@ -40,12 +40,13 @@ public class HashTask{
                             isSmaller=false;
                         }
                     }while(!isSmaller);
-                    fooHash=new Hashes(size);
+                    fooHash=new Hash(size);
                     SecureRandom randomer=new SecureRandom();
                     while(counter<=data){
                         fooHash.hashIn(randomer.nextInt(999));
                         ++counter;
                     }
+                    fooHash.rehashIn();
                     System.out.println();
                     fooHash.showHash();
                     System.out.println();
@@ -93,13 +94,15 @@ public class HashTask{
     }
 }
 
-class Hashes extends HashTest{
+class Hash extends HashTest{
     private int[] hashTable;
+    private ArrayList queue=new ArrayList();
     private int length;
+    private int qLine=0;
     private float dataIn=0;
     private float probeTry=0;
 
-    public Hashes(int length){
+    public Hash(int length){
         this.length=length;
         hashTable=new int[length];
     }
@@ -116,9 +119,21 @@ class Hashes extends HashTest{
             hashTable[input%length]=input;
         }
         else{
-            linearHandle(input,input%length);
+            queueIn(input);
         }
         ++dataIn;
+    }
+
+    public void rehashIn(){
+        for(int counter=0;counter<queue.size();counter++){
+            int e=(int) queue.get(counter);
+            linearHandle(e,e%length);
+        }
+        queue.clear();
+    }
+
+    private void queueIn(int input){
+        queue.add(input);
     }
 
     private void linearHandle(int input,int pos){
