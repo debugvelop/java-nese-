@@ -43,7 +43,7 @@ public class HashTask{
                     fooHash=new Hash(size);
                     SecureRandom randomer=new SecureRandom();
                     while(counter<=data){
-                        fooHash.hashIn(randomer.nextInt(999));
+                        fooHash.hashIn(randomer.nextInt(999999999));
                         ++counter;
                     }
                     fooHash.rehashIn();
@@ -121,10 +121,10 @@ class Hash extends HashTest{
         else{
             queueIn(input);
         }
-        ++dataIn;
     }
 
     public void rehashIn(){
+        dataIn=queue.size();
         for(int counter=0;counter<queue.size();counter++){
             int e=(int) queue.get(counter);
             linearHandle(e,e%length);
