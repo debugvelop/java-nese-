@@ -115,8 +115,10 @@ class Hash extends HashTest{
     }
 
     public void hashIn(int input){
+        ++dataIn;
         if(hashTable[input%length]==0){
             hashTable[input%length]=input;
+            ++probeTry;
         }
         else{
             queueIn(input);
@@ -124,7 +126,6 @@ class Hash extends HashTest{
     }
 
     public void rehashIn(){
-        dataIn=queue.size();
         for(int counter=0;counter<queue.size();counter++){
             int e=(int) queue.get(counter);
             linearHandle(e,e%length);
