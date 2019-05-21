@@ -12,4 +12,8 @@ public class Node extends BinaryTree{
     public int getFruit(){
         return fruit;
     }
+
+    public void changeFruit(int query){
+        fruit=query;
+    }
 }
