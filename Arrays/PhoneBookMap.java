@@ -5,19 +5,20 @@ public class PhoneBookMap{
     static File phonebook= new File("phonebook.txt");
     static TreeMap<String,String> maindata = new TreeMap<String,String>();
     static boolean isitsorted=false;
+    static Scanner userInput;
     
     public static void main(String[] args){
-        int userInput=0;
-        while(userInput!=4){
+        int menu=0;
+        while(menu!=4){
             System.out.println("PhoneBook Manager");
             System.out.println("1. View PhoneBook");
             System.out.println("2. Sort PhoneBook");
             System.out.println("3. Search PhoneBook");
             System.out.println("4. Exit");
             System.out.print("Mode: ");
-            Scanner Input1 = new Scanner(System.in);
-            userInput= Input1.nextInt();
-            switch(userInput){
+            userInput = new Scanner(System.in);
+            menu = userInput.nextInt();
+            switch(menu){
                 case 1:
                     try {
                         System.out.println();
@@ -39,7 +40,7 @@ public class PhoneBookMap{
                     } catch (FileNotFoundException e) {}
                     break;
                 default:
-                    Input1.close();
+                    userInput.close();
                     break;
             }
         }
@@ -89,8 +90,8 @@ public class PhoneBookMap{
     public static void searchPhoneBook() throws FileNotFoundException{
         System.out.print("Contact name  : ");
         Scanner phonedata= new Scanner(phonebook);
-        Scanner Input2= new Scanner(System.in);
-        String query= Input2.next();
+        userInput = new Scanner(System.in);
+        String query= userInput.next();
         while(phonedata.hasNextLine()){
             String phonename="",phonenumber="";
             if(phonedata.hasNext("[A-Za-z]+")){
