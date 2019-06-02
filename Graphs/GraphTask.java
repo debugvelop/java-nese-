@@ -2,19 +2,25 @@ import java.util.*;
 import java.security.*;
 
 public class GraphTask{
-    public static void main(String[] args){
+    public static void main(String[] args) throws NoSuchAlgorithmException,NoSuchProviderException{
         Graph foo;
-        SecureRandom randomEdge=new SecureRandom();
+        SecureRandom randomEdge=SecureRandom.getInstance("SHA1PRNG","SUN");
         Scanner input1=new Scanner(System.in);
         int vertex=input1.nextInt();
         Scanner input2=new Scanner(System.in);
         int edge=input2.nextInt();
         foo=new Graph(vertex);
-        for(int counter=0;counter<edge;counter++){
-            foo.addEdge(randomEdge.nextInt(vertex-1),randomEdge.nextInt(vertex-1));
+        for(int length=0;length<edge;length++){
+            int row=randomEdge.nextInt(9999999)%vertex;
+            int col=randomEdge.nextInt(9999999)%vertex;
+            if(row==col){
+                row=randomEdge.nextInt(9999999)%vertex;
+                col=randomEdge.nextInt(9999999)%vertex;
+            }
+            foo.addEdge(row,col);
         }
         foo.floydWarshall();
-        //foo.checkArray();
+        foo.checkArray();
         input1.close();
         input2.close();
     }
@@ -23,7 +29,6 @@ public class GraphTask{
 class Graph extends GraphTest{
     private int[][] adjGraph;
     private SecureRandom randomer=new SecureRandom();
-    private int counter=0;
     private int length;
 
     public Graph(int length){
@@ -58,27 +63,21 @@ class Graph extends GraphTest{
     }
 
     public void floydWarshall(){
-        int[][] temp=new int[length][length];
+        int[][] temp=adjGraph;
         int result=0;
         for(int row=0;row<temp.length;row++){
             for(int col=0;col<temp.length;col++){
                 temp[row][col]=adjGraph[row][col];
             }
         }
-        for(int row=0;row<counter;row++){
-            for(int col=0;col<counter;col++){
-                for(int end=0;end<counter;end++){
+        for(int row=0;row<length;row++){
+            for(int col=0;col<length;col++){
+                for(int end=0;end<length;end++){
                     if(temp[row][col]+temp[col][end]<temp[row][end]){
                         temp[row][end]=temp[row][col]+temp[col][end];
                     }
                 }
             }
-        }
-        for(int row=0;row<counter;row++){
-            for(int col=0;col<counter;col++){
-                System.out.print(temp[row][col]+" ");
-            }
-            System.out.println();
         }
     }
 
