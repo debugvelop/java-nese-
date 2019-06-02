@@ -37,7 +37,7 @@ public class GraphTask{
     }
 }
 
-class Graph extends GraphTest{
+class Graph extends GraphTask{
     private int[][] adjGraph;
     private SecureRandom randomer=new SecureRandom();
     private int length;
