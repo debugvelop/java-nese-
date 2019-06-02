@@ -1,4 +1,5 @@
 import java.util.*;
+import java.util.concurrent.TimeUnit;
 import java.security.*;
 
 public class GraphTask{
@@ -11,16 +12,18 @@ public class GraphTask{
         int edge=input2.nextInt();
         foo=new Graph(vertex);
         for(int length=0;length<edge;length++){
-            int row=randomEdge.nextInt(9999999)%vertex;
-            int col=randomEdge.nextInt(9999999)%vertex;
+            int row=randomEdge.nextInt(99999999)%vertex;
+            int col=randomEdge.nextInt(99999999)%vertex;
             if(row==col){
-                row=randomEdge.nextInt(9999999)%vertex;
-                col=randomEdge.nextInt(9999999)%vertex;
+                row=randomEdge.nextInt(99999999)%vertex;
+                col=randomEdge.nextInt(99999999)%vertex;
             }
             foo.addEdge(row,col);
         }
+        long start=System.nanoTime();
         foo.floydWarshall();
-        foo.checkArray();
+        long end=System.nanoTime();
+        System.out.println(TimeUnit.NANOSECONDS.toMillis(end-start)+" ms");
         input1.close();
         input2.close();
     }
