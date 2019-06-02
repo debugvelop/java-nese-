@@ -6,6 +6,7 @@ public class GraphTask{
     public static void main(String[] args) throws NoSuchAlgorithmException,NoSuchProviderException{
         Graph foo;
         SecureRandom randomEdge=SecureRandom.getInstance("SHA1PRNG","SUN");
+        long start,end;
         Scanner input1=new Scanner(System.in);
         int vertex=input1.nextInt();
         Scanner input2=new Scanner(System.in);
@@ -20,10 +21,14 @@ public class GraphTask{
             }
             foo.addEdge(row,col);
         }
-        long start=System.nanoTime();
+        start=System.nanoTime();
         foo.floydWarshall();
-        long end=System.nanoTime();
-        System.out.println(TimeUnit.NANOSECONDS.toMillis(end-start)+" ms");
+        end=System.nanoTime();
+        System.out.println("Floyd-Warshall: "+TimeUnit.NANOSECONDS.toMillis(end-start)+" ms");
+        start=System.nanoTime();
+        foo.dijkstra();
+        end=System.nanoTime();
+        System.out.println("Dijkstra      : "+TimeUnit.NANOSECONDS.toMillis(end-start)+" ms");
         input1.close();
         input2.close();
     }
