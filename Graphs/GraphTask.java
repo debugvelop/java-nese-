@@ -75,7 +75,6 @@ class Graph extends GraphTask{
 
     public void floydWarshall(){
         int[][] temp=new int[length][length];
-        int result=0;
         for(int row=0;row<length;row++){
             for(int col=0;col<length;col++){
                 temp[row][col]=adjGraph[row][col];
