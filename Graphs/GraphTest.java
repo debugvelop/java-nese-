@@ -116,13 +116,13 @@ class Graphs extends GraphTest{
 
     public void showEdges(){
         int[][] temp=new int[length][length];
-        for(int row=0;row<temp.length;row++){
-            for(int col=0;col<temp.length;col++){
+        for(int row=0;row<counter;row++){
+            for(int col=0;col<counter;col++){
                 temp[row][col]=adjGraph[row][col];
             }
         }
-        for(int row=0;row<temp.length;row++){
-            for(int col=0;col<temp.length;col++){
+        for(int row=0;row<counter;row++){
+            for(int col=0;col<counter;col++){
                 if(temp[row][col]==1){
                     temp[col][row]=0;
                     System.out.print(getNode(row)+"-"+getNode(col)+" ");
@@ -139,7 +139,7 @@ class Graphs extends GraphTest{
             visitStatus[start]=true;
         }
         System.out.print(bfs.remove()+" ");
-        for(int col=0;col<adjGraph.length;col++){
+        for(int col=0;col<counter;col++){
             if(adjGraph[start][col]==1 && !visitStatus[col]){
                 bfs.add(getNode(col));
                 visitStatus[col]=true;
