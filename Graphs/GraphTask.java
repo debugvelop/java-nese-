@@ -4,27 +4,30 @@ import java.security.*;
 
 public class GraphTask{
     public static void main(String[] args) throws NoSuchAlgorithmException,NoSuchProviderException{
+        System.gc();
         Graph foo;
         SecureRandom randomEdge=SecureRandom.getInstance("SHA1PRNG","SUN");
         long start,end;
         Scanner input1=new Scanner(System.in);
         int vertex=input1.nextInt();
         Scanner input2=new Scanner(System.in);
-        int edge=input2.nextInt();
+        long edge=input2.nextLong();
         foo=new Graph(vertex);
-        for(int length=0;length<edge;length++){
-            int row=randomEdge.nextInt(99999999)%vertex;
-            int col=randomEdge.nextInt(99999999)%vertex;
+        for(long length=0;length<edge;length++){
+            int row=randomEdge.nextInt(999999999)%vertex;
+            int col=randomEdge.nextInt(999999999)%vertex;
             if(row==col){
-                row=randomEdge.nextInt(99999999)%vertex;
-                col=randomEdge.nextInt(99999999)%vertex;
+                row=randomEdge.nextInt(999999999)%vertex;
+                col=randomEdge.nextInt(999999999)%vertex;
             }
             foo.addEdge(row,col);
         }
+        System.gc();
         start=System.nanoTime();
         foo.floydWarshall();
         end=System.nanoTime();
         System.out.println("Floyd-Warshall: "+TimeUnit.NANOSECONDS.toMillis(end-start)+" ms");
+        System.gc();
         start=System.nanoTime();
         foo.dijkstra();
         end=System.nanoTime();
@@ -45,7 +48,7 @@ class Graph extends GraphTest{
         for(int row=0;row<length;row++){
             for(int col=0;col<length;col++){
                 if(row!=col){
-                    adjGraph[row][col]=1000000;
+                    adjGraph[row][col]=10000000;
                 }
             }
         }
@@ -62,19 +65,19 @@ class Graph extends GraphTest{
     }
 
     public void addEdge(int row,int col){
-        int range=randomer.nextInt(20);
+        int range=randomer.nextInt(21);
         if(range==0){
-            range=randomer.nextInt(20);
+            range=randomer.nextInt(21);
         }
         adjGraph[row][col]=range;
         adjGraph[col][row]=range;
     }
 
     public void floydWarshall(){
-        int[][] temp=adjGraph;
+        int[][] temp=new int[length][length];
         int result=0;
-        for(int row=0;row<temp.length;row++){
-            for(int col=0;col<temp.length;col++){
+        for(int row=0;row<length;row++){
+            for(int col=0;col<length;col++){
                 temp[row][col]=adjGraph[row][col];
             }
         }
@@ -87,8 +90,56 @@ class Graph extends GraphTest{
                 }
             }
         }
+        /*for(int row=0;row<length;row++){
+            for(int col=0;col<length;col++){
+                System.out.print(temp[row][col]+" ");
+            }
+            System.out.println();
+        }*/
+    }
+
+    private int minDist(int[] result,boolean[] visit){
+        int minValue=10000000;
+        int minIndex=-1;
+        for(int counter=0;counter<length;counter++){
+            if(!visit[counter] && result[counter]<=minValue){
+                minValue=result[counter];
+                minIndex=counter;
+            }
+        }
+        return minIndex;
     }
 
     public void dijkstra(){
+        int[] store=new int[length];
+        int[][] temp=new int[length][length];
+        boolean[] isVisited=new boolean[length];
+        for(int index=0;index<length;index++){
+            int x=0;
+            for(int counter=0;counter<length;counter++){
+                store[counter]=10000000;
+                isVisited[counter]=false;
+            }
+            store[index]=0;
+            for(int counter=0;counter<length;counter++){
+                int row=minDist(store,isVisited);
+                isVisited[row]=true;
+                for(int col=0;col<length;col++){
+                    if(store[row]+adjGraph[row][col]<store[col] && store[row]!=10000000 && !isVisited[col] && adjGraph[row][col]!=0){
+                        store[col]=store[row]+adjGraph[row][col];
+                    }
+                }
+            }
+            for(int e: store){
+                temp[index][x++]=e;
+            }
+        }
+        /*for(int row=0;row<length;row++){
+            //System.out.print(store[row]+" ");
+            for(int col=0;col<length;col++){
+                System.out.print(temp[row][col]+" ");
+            }
+            System.out.println();
+        }*/
     }
 }
